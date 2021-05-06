@@ -132,15 +132,136 @@ struct View_ZStack_Previews: PreviewProvider {
 ```
 
 
+### Spacer
+
+
 ```swift
+import SwiftUI
+
+struct View_Spacer: View {
+   var body: some View {
+      VStack(spacing: 0) { // #6
+         HStack {
+            Image(systemName: "suit.heart.fill")
+               .resizable()
+               .frame(width: 70, height: 70)
+               .foregroundColor(.white)
+            
+            // #3
+         }
+         .padding()
+         .background(Color.blue)
+         
+         // #1
+         
+         VStack {
+            // #5
+            
+            Image(systemName: "suit.spade.fill")
+               .resizable()
+               .frame(width: 70, height: 70)
+               .foregroundColor(.white)
+            
+            // #4
+         }
+         .padding()
+         .background(Color.red)
+         
+         // #2
+      }
+   }
+}
+
+struct View_Spacer_Previews: PreviewProvider {
+   static var previews: some View {
+      View_Spacer()
+   }
+}
 ```
 
 
+### Button
+
 ```swift
+import SwiftUI
+
+struct View_Button: View {
+   @State private var value = Int.random(in: 1...100)
+   
+   var body: some View {
+      VStack {
+         Spacer()
+         
+         Text("Random Number")
+            .font(.largeTitle)
+         
+         Text("\(value)")
+            .font(.system(size: 200))
+         
+         Spacer()
+         
+         // #1       
+         Button(action: {
+           self.value = Int.random(in: 1...100)
+         }, label: {
+           HStack {
+             Image(systemName: "repeat")
+
+             Text("Generate")
+
+           }
+           .frame(width: 200, height: 60)
+           // .padding()
+           .background(Color.blue) // 버튼 배경 색
+           .foregroundColor(.whie) // 버튼 글씨 색
+           .cornerRadius(20)
+         })
+      }
+   }
+}
+
+struct View_Button_Previews: PreviewProvider {
+   static var previews: some View {
+      View_Button()
+   }
+}
 ```
 
 
+### Toggle
+
 ```swift
+import SwiftUI
+
+struct View_Toggle: View {
+   @State private var isOn = false
+   
+   var body: some View {
+      VStack(alignment: .center, spacing: 30) {
+         Image(systemName: isOn ? "lightbulb.fill" : "lightbulb")
+            .resizable()
+            .foregroundColor(isOn ? .yellow : .gray)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 300, height: 300)
+         
+         // #1
+         //Toggle("Toggle Switch", isOn: $isOn)
+         VStack(spacing: 30) {
+            Toggle(isOn: $isOn, label: {
+              EmptyView()
+            })
+            .labelIsHidden()
+            .padding() // 이거만 써줘도 기본 여백이 양 옆에 추가된다         
+         }
+      }
+   }
+}
+
+struct View_Toggle_Previews: PreviewProvider {
+   static var previews: some View {
+      View_Toggle()
+   }
+}
 ```
 
 
